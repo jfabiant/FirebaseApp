@@ -1,4 +1,4 @@
-package electron.jfabiant.firebaseapp;
+package electron.jfabiant.firebaseapp.activities;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -12,10 +12,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -24,6 +21,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+
+import electron.jfabiant.firebaseapp.R;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -190,7 +189,7 @@ public class LoginActivity extends AppCompatActivity {
                             loginPanel.setVisibility(View.VISIBLE);
                             progressBar.setVisibility(View.GONE);
                             Log.e(TAG, "signInWithEmailAndPassword:failed", task.getException());
-                            Toast.makeText(LoginActivity.this, "Username and/or password invalid", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "Correo o contraseña invalidos", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -200,6 +199,8 @@ public class LoginActivity extends AppCompatActivity {
 
         String email = emailInput.getText().toString();
         String password = passwordInput.getText().toString();
+        double latitud = 3;
+        double longitud = 5;
 
         if(email.isEmpty() || password.isEmpty()){
             Toast.makeText(this, "Por favor complete todos los campos", Toast.LENGTH_SHORT).show();
@@ -207,7 +208,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         if(password.length() < 6){
-            Toast.makeText(this, "Using a weak password", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Ingrese una contraseña mas fuerte", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -223,7 +224,7 @@ public class LoginActivity extends AppCompatActivity {
                             loginPanel.setVisibility(View.VISIBLE);
                             progressBar.setVisibility(View.GONE);
                             Log.e(TAG, "createUserWithEmailAndPassword:failed", task.getException());
-                            Toast.makeText(LoginActivity.this, "Register failed", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "El email ya está en uso", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -244,7 +245,7 @@ public class LoginActivity extends AppCompatActivity {
                     // User is signed in
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
 
-                    Toast.makeText(LoginActivity.this, "Welcome " + user.getDisplayName(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Bienvenido " + user.getEmail(), Toast.LENGTH_SHORT).show();
 
                     // Go MainActivity
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));

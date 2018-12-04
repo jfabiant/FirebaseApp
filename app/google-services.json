@@ -67,6 +67,14 @@
           }
         },
         {
+          "client_id": "687394521835-uqrhglc5mkgljdgr317h580t847bg2jj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "electron.jfabiant.firebaseapp",
+            "certificate_hash": "a7a28d1a3176b25036e9807f40259baf03201b6b"
+          }
+        },
+        {
           "client_id": "687394521835-a16cmj125l96tpmief16do92lnpktdmm.apps.googleusercontent.com",
           "client_type": 3
         }
