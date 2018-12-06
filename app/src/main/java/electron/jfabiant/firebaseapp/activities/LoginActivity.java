@@ -1,5 +1,6 @@
 package electron.jfabiant.firebaseapp.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.location.LocationManager;
@@ -38,6 +39,9 @@ public class LoginActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private View loginPanel;
 
+    private LocationManager locationManager;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,12 +52,11 @@ public class LoginActivity extends AppCompatActivity {
 
         // Init FirebaseAuth
         initFirebaseAuth();
-
-        // Init GoogleSignIn
-        //initGoogleSignIn();
-
         // Init FirebaseAuthStateListener
         initFirebaseAuthStateListener();
+
+        //get localitaiton
+        locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
     }
 
     /**
@@ -65,43 +68,7 @@ public class LoginActivity extends AppCompatActivity {
 
     /* Client used to interact with Google APIs. */
     private GoogleApiClient mGoogleApiClient;
-    /*
-    private void initGoogleSignIn(){
 
-        // Configure SingIn Button
-        SignInButton mGoogleLoginButton = (SignInButton) findViewById(R.id.sign_in_button);
-        mGoogleLoginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                loginPanel.setVisibility(View.GONE);
-                progressBar.setVisibility(View.VISIBLE);
-
-                // OnClick Google SingIn Button
-                Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
-                startActivityForResult(signInIntent, GOOGLE_SIGNIN_REQUEST);
-            }
-        });
-
-        // Configure sign-in to request the user's ID, email address, and basic profile. ID and basic profile are included in DEFAULT_SIGN_IN.
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken("687394521835-a16cmj125l96tpmief16do92lnpktdmm.apps.googleusercontent.com")
-                .requestEmail()
-                .build();
-
-        // Build a GoogleApiClient with access to the Google Sign-In API and the options specified by gso.
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .enableAutoManage(this, new GoogleApiClient.OnConnectionFailedListener() {
-                    @Override
-                    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-                        // An unresolvable error has occurred and Google APIs (including Sign-In) will not be available.
-                        Log.e(TAG, "onConnectionFailed:" + connectionResult);
-                    }
-                })
-                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-                .build();
-
-    }
-    */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -290,7 +257,6 @@ public class LoginActivity extends AppCompatActivity {
 
         double latitud = 33.44444;
         double longitud = 19.12222;
-
 
         // Get currentuser from FirebaseAuth
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
